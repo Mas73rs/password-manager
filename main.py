@@ -80,7 +80,7 @@ password_label = Label(text='Password:', justify='center')
 password_label.grid(row=3, column=0)
 password_entry = Entry(width=22)
 password_entry.grid(row=3, column=1)
-generate_button = Button(text='Generate Password', width=11)
+generate_button = Button(text='Generate Password', width=11, command=generate_password)
 generate_button.grid(row=3, column=2)
 
 # ROW 4: Add
