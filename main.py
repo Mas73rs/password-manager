@@ -9,14 +9,24 @@ def save_data():
     website = website_entry.get()
     email = email_entry.get()
     password = password_entry.get()
-    try:
-        with open('./data.txt', 'a') as file:
-            file.writelines(f'{website} | {email} | {password} \n')
-    except PermissionError:
-        print("Permission Denied: Unable to write to the file.")
-    except IOError as e:
-        print(f"IOError: {e}")
-    print(f'New Password added for: {website} \n')
+
+    if len(website) == 0 or len(password) == 0:
+        messagebox.showinfo(title='Oops', message="Please don't leave any"
+                                                  "fields empty")
+    else:
+        is_ok = messagebox.askokcancel(title=website,
+            message=f'These are the details entered: \nEmail: {email}'
+                    f'\nPassword: {password} \nIs it ok to save?')
+
+        if is_ok:
+            try:
+                with open('./data.txt', 'a') as file:
+                    file.writelines(f'{website} | {email} | {password} \n')
+            except PermissionError:
+                print("Permission Denied: Unable to write to the file.")
+            except IOError as e:
+                print(f"IOError: {e}")
+            print(f'New Password added for: {website} \n')
 
     website_entry.delete(0, END)
     password_entry.delete(0, END)
