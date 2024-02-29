@@ -1,10 +1,26 @@
 from tkinter import *
+from tkinter import messagebox
 
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
+def save_data():
+    website = website_entry.get()
+    email = email_entry.get()
+    password = password_entry.get()
+    try:
+        with open('./data.txt', 'a') as file:
+            file.writelines(f'{website} | {email} | {password} \n')
+    except PermissionError:
+        print("Permission Denied: Unable to write to the file.")
+    except IOError as e:
+        print(f"IOError: {e}")
+    print(f'New Password added for: {website} \n')
 
+    website_entry.delete(0, END)
+    password_entry.delete(0, END)
+    
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
 window.title('Password Manager')
@@ -41,7 +57,7 @@ generate_button = Button(text='Generate Password', width=11)
 generate_button.grid(row=3, column=2)
 
 # ROW 4: Add
-add_button = Button(text='Add')
+add_button = Button(text='Add', command=save_data)
 add_button.grid(row=4, column=1, columnspan=2, sticky='EW')
 
 window.mainloop()
